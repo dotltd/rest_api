@@ -1,28 +1,32 @@
-import { Body, Injectable, Query } from '@nestjs/common';
+import {
+    BadRequestException,
+    Body,
+    ForbiddenException,
+    HttpStatus,
+    Injectable,
+    InternalServerErrorException, NotFoundException,
+    Query
+} from "@nestjs/common";
 import { ProductModel } from './modules/database.module';
 import { ProductsInterface} from "./products.interface";
 import { addAuth, checkAuth } from "./modules/auth.module";
-/*
- * TODO: Realise fetch queries
- * TODO: Purge Fix
- */
 @Injectable()
 export class ProductsService {
     // Delete one element
     async del(id: number, auth: string): Promise<object> {
         if (!checkAuth(auth))
-            return { message: 'You have no access to this method.' };
+            throw new ForbiddenException({ message: 'You have no access to this method.' })
         try {
             await ProductModel.deleteOne({ id: id });
         } catch (err) {
-            return err.stack;
+            throw new InternalServerErrorException(err.stack);
         }
         return { message: `Deleted object with id: ${id}` };
     }
     // Post new item into a database
     async post(body: ProductsInterface): Promise<object> {
         var checker = await ProductModel.findOne({ id: body.id }).exec();
-        if (checker) return { message: 'Object already exists' };
+        if (checker) throw new BadRequestException({ message: 'Object already exists' })
         let data = {
             id: body.id,
             quantity: body.quantity,
@@ -42,20 +46,16 @@ export class ProductsService {
         return data;
     }
     // Useless main page
-    async mainPage(): Promise<string> {
-        let links = [
-            '<a href="/products/fetch">Fetch</a>',
-            '<a href="/products/post">Post</a>',
-        ];
-        return links.join('<br>');
+    async mainPage(): Promise<object> {
+        throw new NotFoundException({error: "Invalid request. Page does not exists"})
     }
     async purge(auth): Promise<object> {
         if (!checkAuth(auth))
-            return { message: 'You have no access to this method.' };
+            throw new ForbiddenException({ message: 'You have no access to this method.' });
         try {
             await ProductModel.deleteMany({ name: /.*/ });
         } catch (err) {
-            return err.stack;
+            throw new InternalServerErrorException({ message: 'You have no access to this method.' });
         }
         return { message: `Purged the entire database.` };
     }

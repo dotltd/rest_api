@@ -12,7 +12,7 @@ import { ProductsSchema, ProductModel } from './modules/database.module';
 import { ProductsService } from './products.service';
 import { Request } from 'express';
 
-@Controller('products')
+@Controller('data/products')
 export class ProductsController {
   constructor(private readonly service: ProductsService) {}
   @Get()

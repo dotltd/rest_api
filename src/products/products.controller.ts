@@ -1,16 +1,7 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Post,
-  Query,
-  Req,
-} from '@nestjs/common';
-import { ProductsInterface, AuthInterface } from './products.interface';
-import { ProductsSchema, ProductModel } from './modules/database.module';
-import { ProductsService } from './products.service';
-import { Request } from 'express';
+import { Body, Controller, Delete, Get, Post, Req } from "@nestjs/common";
+import { AuthInterface, ProductsInterface } from "./products.interface";
+import { ProductsService } from "./products.service";
+import { Request } from "express";
 
 @Controller('data/products')
 export class ProductsController {
@@ -37,6 +28,6 @@ export class ProductsController {
   }
   @Post('addAuth')
   test(@Body() body: AuthInterface) {
-    return this.service.addAuth(body.token)
+    return this.service.addAuth(body.token);
   }
 }

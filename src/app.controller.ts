@@ -1,5 +1,5 @@
-import { Controller, Get, HttpCode, Post, HttpStatus, HttpException, Redirect } from "@nestjs/common";
-import { AppService } from './app.service';
+import { Controller, Get } from "@nestjs/common";
+import { AppService } from "./app.service";
 
 @Controller()
 export class AppController {
@@ -9,6 +9,6 @@ export class AppController {
   // redirection() {}
   @Get()
   main(): object {
-    return this.appService.main_page()
+    return this.appService.main_page();
   }
 }

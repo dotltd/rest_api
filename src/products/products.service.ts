@@ -41,11 +41,10 @@ export class ProductsService {
   }
   // Fetch all items
   async fetch(): Promise<object> {
-    let data = await ProductModel.find(
+    return await ProductModel.find(
       {},
       { _id: false, id: false, __v: false },
     );
-    return data;
   }
   // Useless main page
   async mainPage(): Promise<object> {

@@ -1,6 +1,6 @@
 export class ProductsDTOClass {
-  readonly id: number;
-  readonly quantity: number;
-  readonly name: string;
-  readonly price: number;
+    readonly id: number;
+    readonly quantity: number;
+    readonly name: string;
+    readonly price: number;
 }

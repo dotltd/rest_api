@@ -41,7 +41,7 @@ export class ProductsService {
     }
     // Fetch all items
     async fetch(): Promise<any> {
-        return await ProductModel.find(
+        return ProductModel.find(
             {},
             { _id: false, id: false, __v: false },
         );

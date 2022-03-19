@@ -68,6 +68,6 @@ export class ProductsService {
     return { message: `Purged the entire database.` };
   }
   async addAuth(param: string): Promise<object> {
-    return await addAuth(param);
+    return addAuth(param);
   }
 }
